@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система Управления Больницей</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #0056b3;
+            padding: 0.5rem 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Стили для выпадающего меню */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #007bff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #0056b3;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Стили для кнопки "Выйти", чтобы она выглядела как ссылка */
+        nav form button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            margin: 0 1rem;
+        }
+
+        nav form button:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        section {
+            margin-bottom: 2rem;
+        }
+        footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Система Управления Больницей</h1>
+    </header>
+    <nav>
+        <a href="#diagnosis">Диагностика</a>
+        <a href="#assignments">Назначения</a>
+        <a href="#discharge">Выписка Пациента</a>
+        {% if user.is_authenticated %}
+            <div class="dropdown">
+                <a href="javascript:void(0)">{{ user.username }}</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'profile' %}">Профиль</a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Выйти</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <a href="{% url 'login' %}">Войти</a>
+        {% endif %}
+    </nav>
+    <main>
+        <section id="diagnosis">
+            <h2>Диагностика</h2>
+            <p>Врач обследует пациента и ставит диагноз. На основании диагноза врач может составить план лечения, включающий процедуры, лекарства или операции.</p>
+        </section>
+        <section id="assignments">
+            <h2>Назначения</h2>
+            <p>Планы лечения могут выполняться медсестрами (процедуры и лекарства) или врачами (любые назначения).</p>
+        </section>
+        <section id="discharge">
+            <h2>Выписка Пациента</h2>
+            <p>После завершения лечения пациент может быть выписан из больницы. На этом этапе фиксируется окончательный диагноз.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Система Управления Больницей</p>
+    </footer>
+</body>
+</html>

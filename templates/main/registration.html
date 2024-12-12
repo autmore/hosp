@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column; /* Выводим элементы по одному в столбец */
+            gap: 15px; /* Отступ между полями */
+        }
+
+        .form-field {
+            width: 100%; /* Занимаем всю ширину контейнера */
+            box-sizing: border-box; /* Учитываем padding и border в ширине */
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-field input {
+            padding: 0.8rem;
+            width: 100%; /* Занимаем всю ширину родительского контейнера */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Учитываем padding и border в ширине */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .registration-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px; /* Ограничиваем ширину контейнера */
+        }
+
+        .registration-container h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .registration-container button {
+            padding: 0.8rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .registration-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .registration-container p {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .registration-container p a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .registration-container p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="registration-container">
+    <h2>Регистрация</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-field">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+</div>
+</body>
+</html>
